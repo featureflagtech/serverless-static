@@ -6,9 +6,7 @@ module.exports = (serverless, options) => {
         return { 
           serverless: makeServerlessOption(serverless, options),
           path: makePathOption( staticOptions),
-          port: makePortOption( staticOptions ) ,
-          bucket: staticOptions['bucket'] || null,
-          deploy: staticOptions['deploy'] || null
+          port: makePortOption( staticOptions )
         }
 }
 

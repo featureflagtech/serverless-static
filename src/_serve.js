@@ -1,6 +1,8 @@
 'use strict';
 let express =  require("express")
 let morgan = require('morgan')
+var https = require('https')
+var fs = require('fs')
 
 module.exports = (serverless, settings ) => {
   return new Promise((resolve, reject)=>{
@@ -21,11 +23,14 @@ module.exports = (serverless, settings ) => {
     
     app.use(express.static( settings.path ))
 
-    app.listen( settings.port, () => { 
+    https.createServer({
+      key: fs.readFileSync('../../../../Certs/key.pem'),
+      cert: fs.readFileSync('../../../../Certs/cert.pem')
+    }, app).listen( settings.port, () => { 
 
       serverless.cli.consoleLog('') 
       serverless.cli.log( `[ Static ] serving files from ${ settings.path } folder` ); 
-      serverless.cli.log( `[ Static ] serving files on http://localhost:${ settings.port }` )
+      serverless.cli.log( `[ Static ] serving files on https://localhost:${ settings.port }` )
       serverless.cli.consoleLog('') 
       resolve()
 
