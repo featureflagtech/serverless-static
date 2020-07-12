@@ -15,7 +15,7 @@ module.exports = class ServerlessStaticHttpsPlugin {
         lifecycleEvents: [ "start" ],
         commands: {
           serve: {
-            usage: "serve local directory",
+            usage: "serve local directory securely",
             lifecycleEvents: [ "start" ],
           }
         }
@@ -23,9 +23,9 @@ module.exports = class ServerlessStaticHttpsPlugin {
     };
 
     this.hooks = {
-      "before:offline:start:init": server.serve.bind( this, serverless, static_env ),
-      "before:offline:start": server.serve.bind( this, serverless, static_env ),
-      "static:serve:start": server.serve.bind( this, serverless, static_env )
+      "before:offline:start:init": server.bind( this, serverless, static_env ),
+      "before:offline:start": server.bind( this, serverless, static_env ),
+      "static:serve:start": server.bind( this, serverless, static_env )
     };
 
   }

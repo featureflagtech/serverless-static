@@ -10,7 +10,7 @@ To be used in tandem with:
  * [serverless-s3-sync](https://www.npmjs.com/package/serverless-s3-sync)
 
 NOTE: to run HTTPS servers locally you need to install SSL certificates: 
-* [how to install SSL certificates for local development]()
+* [how to install SSL certificates for local development on a Mac](https://expeditedsecurity.com/blog/localhost-ssl-fix/)
 
 ## 1.install the plugin
 
