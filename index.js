@@ -1,37 +1,31 @@
-'use strict';
+"use strict";
 
-const actions = require('./src')
-const _static = require('./src/__make_options')
+const server = require( "./src/httpServer" );
+const options = require( "./src/options" );
 
+module.exports = class ServerlessStaticHttpsPlugin {
 
-module.exports = class ServerlessStaticServePlugin {
+  constructor( serverless ) {
 
-  constructor(serverless, options) {
-    const static_env = _static( serverless, options ) // generate static object with all options available to the functions
+    const static_env = options( serverless );
 
     this.commands = {
-      static: {
-        usage: 'serve local directory',
-        lifecycleEvents: ['start'],
+      "static-https": {
+        usage: "serve local directory securely",
+        lifecycleEvents: [ "start" ],
         commands: {
           serve: {
-            usage: 'serve local directory',
-            lifecycleEvents: [ 'start' ],
-          },
-          sync: {
-            usage: 'sync local directory with bucket speficied inside serverless.yml file',
-            lifecycleEvents: [ 'start' ],
+            usage: "serve local directory",
+            lifecycleEvents: [ "start" ],
           }
         }
       }
     };
 
     this.hooks = {
-      // lifecycle hooks for static:serve
-      "before:offline:start:init": actions.serve.bind( this, serverless, static_env ), // hook from serverless-offline
-      "before:offline:start": actions.serve.bind( this, serverless, static_env ), // hook from serverless-offline
-      'static:serve:start': actions.serve.bind( this, serverless, static_env ),
-      // 'static:serve': actions.serve.bind( null, serverless, static_env ),
+      "before:offline:start:init": server.serve.bind( this, serverless, static_env ),
+      "before:offline:start": server.serve.bind( this, serverless, static_env ),
+      "static:serve:start": server.serve.bind( this, serverless, static_env )
     };
 
   }

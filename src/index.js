@@ -1,1 +1,0 @@
-exports.serve = require('./_serve')
